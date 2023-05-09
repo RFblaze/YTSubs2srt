@@ -60,7 +60,7 @@ def process_file(file_path):
                 # Looks for "mm:ss" in the next lines
                 match2 = re.search(r'\d{2}:\d{2}', lines[j])
                 matchletter = re.search(r'[a-zA-Z]', lines[j])
-                
+
                 if match2 and not matchletter:
                     # Changes "h:mm:ss," to "h:mm:ss,ending timestamp"
                     next_timestamp = match2.group(0)
@@ -113,9 +113,9 @@ def process_file(file_path):
                 lines[i] = lines[i].replace(lines[i], lines[i] + '\n')
                 i += 1
             
-
-    with open(f"{file_path}_new.txt", 'w', encoding="utf-8") as file:
-        file.writelines(lines)
+    file_output = file_path.replace(".txt", "_new.txt")
+    with open(file_output, 'w', encoding="utf-8") as out_file:
+        out_file.writelines(lines)
     
 '''
 Code starts execution here
@@ -123,7 +123,7 @@ Code starts execution here
 while True:
     # User chooses text file
     file_path = askopenfilename()
-
+    
     # If none was chosen, terminate program
     if file_path == '':
         break
