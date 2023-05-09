@@ -31,19 +31,26 @@ def process_file(file_path):
 
         # Search for " m:ss" at line
         matchspace1 = re.search(r'\s\d{1}:\d{2}', lines[i])
+
+        # Search for any other letters or characters in the line
+        matchletter = re.search(r'[a-zA-Z]', lines[i])
         
         # These bottom two conditions just remove the space before the timestamps
-        if matchspace2:
+        if matchspace2 and not matchletter:
             timestamp = matchspace2.group(0)
             lines[i] = lines[i].replace(timestamp, timestamp.strip())
 
-        if matchspace1:
+        if matchspace1 and not matchletter:
             timestamp = matchspace1.group(0)
             lines[i] = lines[i].replace(timestamp, timestamp.strip())
 
         # If a "mm:ss" timestamp was found at line[i], do this.
-        '''This must be checked first because "m:ss" still counts as "mm:ss"'''
-        if match2:
+        '''
+        This must be checked first because "m:ss" still counts as "mm:ss"
+        Also we need to make sure that the line in question is a timestamp line
+        and not just a line containing a time or Bible verse citation.
+        '''
+        if match2 and not matchletter:
             # Changes "mm:ss" to "h:mm:ss,"" in lines[i]
             timestamp = match2.group(0)
             lines[i] = lines[i].replace(timestamp, "0:" + timestamp + ',')
@@ -52,7 +59,9 @@ def process_file(file_path):
             for j in range(i + 1, len(lines)):
                 # Looks for "mm:ss" in the next lines
                 match2 = re.search(r'\d{2}:\d{2}', lines[j])
-                if match2:
+                matchletter = re.search(r'[a-zA-Z]', lines[j])
+                
+                if match2 and not matchletter:
                     # Changes "h:mm:ss," to "h:mm:ss,ending timestamp"
                     next_timestamp = match2.group(0)
                     lines[i] = lines[i].replace(timestamp + ',', timestamp + ',' + next_timestamp)
@@ -69,7 +78,7 @@ def process_file(file_path):
 
             # If "m:ss" was found, do this. Else, it's a text line so insert newline character 
             # at the end of it for srt formatting purposes.
-            if match1:
+            if match1 and not matchletter:
                 # Changes "m:ss" to "h:mm:ss,"
                 timestamp = match1.group(0)
                 lines[i] = lines[i].replace(timestamp, "0:0" + timestamp + ',')
@@ -80,8 +89,9 @@ def process_file(file_path):
                     match1coma = re.search(r'\d{1}:\d{2}', lines[j])
                     match1 = re.search(r'\d{1}:\d{2}', lines[j])
                     match2 = re.search(r'\d{2}:\d{2}', lines[j])
+                    matchletter = re.search(r'[a-zA-Z]', lines[j])
 
-                    if match2:
+                    if match2 and not matchletter:
                         
                         next_timestamp = match2.group(0)
                         lines[i] = lines[i].replace(timestamp + ',', timestamp + ',' + next_timestamp)
@@ -89,14 +99,14 @@ def process_file(file_path):
                         timestamp = match2.group(0)
                         lines[i] = lines[i].replace(timestamp, '0:' + timestamp)
 
-                    elif match1:
+                    elif match1 and not matchletter:
                         next_timestamp = match1.group(0)
                         lines[i] = lines[i].replace(timestamp + ',', timestamp + ',' + next_timestamp)
 
                         timestamp = match1.group(0)
                         lines[i] = lines[i].replace(timestamp, '0:0' + timestamp)
                         break
-                    elif match1coma:
+                    elif match1coma and not matchletter:
                         timestamp = match1coma.group(0)
                         lines[i] = lines[i].replace(timestamp, '0:0' + timestamp)
             else:
@@ -121,6 +131,7 @@ while True:
     # Try to format & save as new file. Else, program terminates
     try:
         process_file(file_path)
+        print("Success")
         break
     except:
         print("File not found")
