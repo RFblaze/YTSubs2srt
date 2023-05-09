@@ -7,11 +7,13 @@ When you are watching a youtube video, you can enable the transcript to play alo
 ## Instructions
 - The program requires you to select the file you want to format. Ensure that the file in question is in the txt format as docx or other file formats won't work. 
 - If all goes well, the program should terminate when done.
+- There is both a Python file and an executable .exe file in the output directory. The executable was made using auto-py-to-exe so as to not require python being installed the computer that runs it.
 
 ## A few comments
 - This program has been tested on Python 3.9.7
 - There are no external libraries that are needed.
 - This program has not been tested with videos that are an hour or longer and as such might not work properly with those transcripts.
+- The executable might not always be up to date with the Python file (I might forget to remake the executable after the Python file is changed).
 
 ## Issues
 1. For the moment, this program does not distinguish the difference between actual timestamps where the subtitles occur and time in sentences. For example:
