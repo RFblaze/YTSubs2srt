@@ -16,7 +16,8 @@ When you are watching a youtube video, you can enable the transcript to play alo
 ## Issues
 1. For the moment, this program does not distinguish the difference between actual timestamps where the subtitles occur and time in sentences. For example:
 
->4:00
->Is the current time 2:47pm, Harry? Dumbledore asked calmly.
+> 4:00
 
-In this case, the program will recognize both 4:00 and 2:47 as timestamps and will format it accordingly (which will not result in valid srt syntax). This issue will be resolved eventually
+> Is the current time 2:47pm, Harry? Dumbledore asked calmly.
+
+&nbsp;&nbsp;&nbsp;&nbsp;In this case, the program will recognize both 4:00 and 2:47 as timestamps and will format it accordingly (which will not result in valid   srt syntax). This issue will be resolved eventually
