@@ -12,7 +12,9 @@ When you are watching a youtube video, you can enable the transcript to play alo
 - This program has been tested on Python 3.9.7
 - There are no external libraries that are needed.
 - This program has not been tested with videos that are an hour or longer and as such might not work properly with those transcripts.
-- For the moment, this program does not distinguish the difference between actual timestamps where the subtitles occur and time in sentences. For example:
+
+## Issues
+1. For the moment, this program does not distinguish the difference between actual timestamps where the subtitles occur and time in sentences. For example:
 
 >4:00
 >Is the current time 2:47pm, Harry? Dumbledore asked calmly.
